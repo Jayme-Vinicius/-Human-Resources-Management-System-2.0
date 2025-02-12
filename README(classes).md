@@ -9,3 +9,8 @@ Classes:
 - beneficios e descontos: a classe beneficios e descontos armazena uma lista de beneficios e uma lista de descontos e o número total de cada um deles
 - beneficio: a classe beneficios é uma classe que armazena o nome e a forma de aumento salarial (percentual, multiplicativo ou fixo)
 - descontos: a classe descontos é uma classe que armazena o nome e a forma de diminuição salarial (percentual, multiplicativo ou fixo) 
+
+Funções que fazem uso do class: 
+- Adicionar_Informação(novo_funcionário.informações): preenche os dados na subclasse funcionário
+- Realizar_Avaliação_Funcionário(novo_funcionário): preenche os dados na subclasse avaliação
+- Registrar_Beneficios(novo_funcionário): preenche os dados na subclasse beneficios 
