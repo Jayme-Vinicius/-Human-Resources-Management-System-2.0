@@ -1,0 +1,363 @@
+class Employees():
+    def __init__(self):
+        self.information = Information()
+        self.evaluation = Evaluation()
+        self.payment = Payment()
+
+class Information():
+    def __init__(self):
+        self.name = "N/A"
+        self.age = "N/A"
+        self.role = "N/A"
+        self.salary = "0"
+        self.total_salary = "N/A"
+        self.schedule = "N/A"
+        self.status = "N/A"
+
+class Evaluation():
+    def __init__(self):
+        self.score = "0"
+        self.description = "N/A"
+        self.absences = "0"
+
+class Payment():
+    def __init__(self):
+        self.total_benefits = "0"
+        self.benefits = []
+        self.total_deductions = "0" 
+        self.deductions = []
+
+class Benefit():
+    def __init__(self):
+     self.name = "N/A"
+     self.increase_type = "N/A"
+     self.amount = "0"
+
+class Deduction():
+    def __init__(self):
+        self.name = "N/A"
+        self.increase_type = "N/A"
+        self.amount = "0"
+
+def Add_Employee(employee_list, number_of_employees):
+    while True:
+        new_employee = Employees()
+        Add_Information(new_employee)
+        employee_list.append(new_employee)
+        number_of_employees = number_of_employees + 1 
+        while True:
+            choice = (input("Do you want to continue Hiring employees(1)\nDo you want to exit(-1)\n\n"))
+            match choice:
+                case '-1':
+                    return employee_list, number_of_employees
+                case '1':  
+                    break
+                case _:
+                    print("Invalid option\n")  
+                    continue        
+
+def Remove_Employee(employee_list, number_of_employees):
+        if employee_list == []:
+            print("No employees registered at the moment\n")
+            return
+        while True:
+            search = input("Do you want to Fire All Employees or just a specific employee\n\n").strip().lower() 
+            fired_employee = 0
+            if search == "all":
+                for index in range(0 , number_of_employees):
+                    employee_list.pop(index)
+                    number_of_employees = number_of_employees - 1
+            else:
+                for index in range(0 , number_of_employees):
+                    if employee_list[index].information.name == search:
+                        print(f"Employee {employee_list[index].information.name} has been Fired\n")
+                        employee_list.pop(index)
+                        number_of_employees = number_of_employees - 1
+                        fired_employee = 1
+                        break
+            if fired_employee == 0:
+                print(f"Employee {search} was not found, try again\n")
+            while True:
+                choice = (input("Do you want to continue Firing Employees(1)\nDo you want to exit(-1)\n\n"))
+                match choice:
+                    case '-1':
+                        return employee_list, number_of_employees
+                    case '1':
+                        break
+                    case _:
+                        print("Invalid option")
+                        continue         
+
+def Add_Information(employee_information):
+    employee_information.information.name = input("Employee's full name: ")
+    employee_information.information.age = input("Employee's age: ")
+    employee_information.information.role = input("Employee's role: ")
+    employee_information.information.salary = input("Employee's salary: ")
+    employee_information.information.schedule = input("Employee's work hours: ")
+    employee_information.information.status = "Active"
+
+def Update_Information(employee_list, number_of_employees):
+    if employee_list == []:
+        print("No employees registered at the moment\n\n")
+        return
+    while True:
+        search = input("Do you want to update information for all employees or just a specific employee\n\n").strip().lower()
+        employee_updated = 0
+        if search == "all":
+            for index in range(0, number_of_employees):
+                Add_Information(employee_list[index])         
+        else:
+            for index in range(0, number_of_employees):
+                if employee_list[index].information.name == search:
+                    Add_Information(employee_list[index])
+                    print(f"Employee {employee_list[index].information.name} had their information updated\n")
+                    employee_updated = 1
+                    break
+            if employee_updated == 0:
+                print(f"Employee {search} was not found\n")
+        while True:
+            choice = (input("Do you want to continue updating employee information(1)\nDo you want to exit(-1)\n\n"))
+            match choice:
+                case '-1':
+                    return employee_list
+                case '1':  
+                    break   
+                case _:
+                    print("Invalid option")
+                    continue
+
+def Conduct_Employee_Evaluation(employee_list, number_of_employees):
+    if employee_list == []:
+        print("No employees registered at the moment\n\n")
+        return 
+    while True:
+        search = input("Do you want to evaluate all employees or just a specific employee\n\n").strip().lower()
+        evaluated_employee = 0
+        if search == "all":
+            for index in range(0, number_of_employees):
+                Employee_Evaluation(employee_list[index])      
+        else:
+            for index in range(0, number_of_employees):
+                if employee_list[index].information.name == search:
+                    Employee_Evaluation(employee_list[index])
+                    print(f"Employee {employee_list[index].information.name} has been evaluated\n")
+                    evaluated_employee = 1
+            if evaluated_employee == 0:
+                print(f"Employee {search} was not found\n")
+        while True:
+            choice = (input("Do you want to continue evaluating employees(1)\nDo you want to exit(-1)\n\n"))
+            match choice:
+                case '-1':
+                    return employee_list
+                case '1':
+                    break
+                case _:
+                    print("Invalid option\n\n")
+                    continue        
+
+def Employee_Evaluation(evaluated_employee):
+    evaluated_employee.evaluation.score = input(f"On a scale of zero to ten, how would you rate employee {evaluated_employee.information.name}:")
+    evaluated_employee.evaluation.description = input(f"How would you describe employee {evaluated_employee.information.name}:")
+    evaluated_employee.evaluation.absences = input(f"How many absences did employee {evaluated_employee.information.name} have this month:")               
+
+def Add_Benefits(employee_list, benefit_list, number_of_employees, number_of_benefits):
+    while True:
+        new_benefit = Benefit()
+        Add_Benefit(new_benefit)
+        benefit_list.append(new_benefit)
+        number_of_benefits = number_of_benefits + 1
+        for index in range(0 , number_of_employees):
+            employee_list[index].payment.benefits.append(0)
+        while True:
+            choice = (input("Do you want to continue Adding Benefits(1)\nDo you want to exit(-1)\n\n"))
+            match choice:
+                case '-1':
+                    return benefit_list, number_of_benefits
+                case '1':  
+                    break
+                case _:
+                    print("Invalid option\n\n")  
+                    continue  
+
+def Add_Benefit(benefit):
+    benefit.name = input("Benefit Name: ")
+    while True:    
+        benefit.increase_type = input("""Benefit Increase Type Will Be:
+        "Percentage(%)"
+        "Multiplicative(*)"
+        "Additive(+)":""")
+        if benefit.increase_type == "%" or "*" or "+":
+                break
+        else:
+            print("Invalid option")
+    benefit.amount = input("Amount of this Increase: ")
+
+def Remove_Benefits(employee_list, benefit_list, number_of_employees, number_of_benefits):
+    if benefit_list == []:
+        print("No Benefits have been Added yet\n\n")
+        return benefit_list
+    while True:
+        search = input("Do you want to Remove all Benefits or just a specific Benefit\n\n").strip().lower() 
+        deleted_benefit = 0
+        if search == "all":
+            for index_1 in range(0 , number_of_benefits):
+                benefit_list.pop(index_1)
+                number_of_benefits = number_of_benefits - 1
+                for index_2 in range(0 , number_of_employees):
+                    employee_list[index_2].payment.benefits.pop(index_1)
+        else:
+            for index_1 in range(0 , number_of_benefits):
+                if benefit_list[index_1].name == search:
+                    print(f"Benefit {benefit_list[index_1].name} has been Deleted\n")
+                    benefit_list.pop(index_1)
+                    number_of_benefits = number_of_benefits - 1
+                    deleted_benefit = 1
+                    for index_2 in range(0 , number_of_employees):
+                        employee_list[index_2].payment.benefits.pop(index_1)
+                    break
+        if deleted_benefit == 0:
+            print(f"Benefit {search} was not found, try again\n")
+        while True:
+            choice = (input("Do you want to continue Removing Benefits(1)\nDo you want to exit(-1)\n\n"))
+            match choice:
+                case '-1':
+                    return benefit_list, number_of_benefits
+                case '1':
+                    break
+                case _:
+                    print("Invalid option")
+                    continue 
+
+def Print_Benefit_List(benefit_list, number_of_benefits):
+    if benefit_list == []:
+        print("No Benefits have been Added yet\n\n")
+        return benefit_list
+    while True:
+        search = input("Do you want to see all benefits or just a specific benefit\n\n").strip().lower()
+        benefit_found = 0
+        if search == "all":
+            for index in range(0 , number_of_benefits):
+                Print_Benefit(benefit_list[index])
+        else:
+            for index in range(0, number_of_benefits):
+                if benefit_list[index].name == search:
+                    benefit_found = 1
+                    Print_Benefit(benefit_list[index])
+                    break
+        if benefit_found == 0 and search != "all":
+            print(f"Benefit {search} was not found, try again\n")
+        while True:
+            choice = (input("Do you want to continue searching benefits(1)\nDo you want to exit(-1)\n\n"))
+            match choice:
+                case '-1':
+                    return benefit_list
+                case '1':
+                    break
+                case _:
+                    print("Invalid option\n\n")
+                    continue
+
+def Print_Benefit(benefit):
+    print(f"""
+    Name: {benefit.name}
+    Increase Type: {benefit.increase_type}
+    Amount: {benefit.amount}\n""")
+
+def Register_Employee_Benefits(employee_list, benefit_list, number_of_employees, number_of_benefits):
+    if employee_list == []:
+        print("No employees registered at the moment\n\n")
+        return employee_list
+    if benefit_list == []:
+        print("No Benefits have been Added yet\n\n")
+        return employee_list
+    while True:
+        search = input("Do you want to Register Benefits for All Employees or just Benefits for a specific Employee\n\n").strip().lower()
+        benefited_employee = 0
+        if search == "all":
+            for index_1 in range(0 , number_of_employees):
+                for index_2 in range(0 , number_of_benefits):
+                    while True:
+                        benefit = input(f"""
+Does Employee {employee_list[index_1].information.name} Have {benefit_list[index_2].name}?\n Yes or No: """).strip().lower()
+                        if benefit == "yes":
+                            employee_list[index_1].payment.benefits[index_2] == 1
+                            break
+                        elif benefit == "no":
+                            break
+                        else:
+                            print("Invalid option, please try again")
+                            continue
+        else:
+            for index_1 in range(0, number_of_employees):
+                if employee_list[index_1].information.name == search:
+                    benefited_employee = 1
+                    for index_2 in range(0, number_of_benefits):
+                        while True:
+                            benefit = input(f"""
+Does Employee {employee_list[index_1].information.name} Have {benefit_list[index_2].name}?\n Yes or No: """).strip().lower()
+                            if benefit == "yes":
+                                employee_list[index_1].payment.benefits[index_2] == 1
+                                break
+                            elif benefit == "no":
+                                break
+                            else:
+                                print("Invalid option, please try again")
+                                continue
+        if benefited_employee == 0 and search != "all":
+            print(f"Benefit {search} was not found, try again\n")
+        while True:
+            choice = (input("Do you want to continue Registering Employee Benefits(1)\nDo you want to exit(-1)\n\n"))
+            match choice:
+                case '-1':
+                    return employee_list
+                case '1':
+                    break
+                case _:
+                    print("Invalid option\n\n")
+                    continue
+
+def Add_Deductions(employee_list, deduction_list, number_of_employees, number_of_deductions):
+    while True:
+        new_deduction = Deduction()
+        Add_Benefit(new_deduction)
+        deduction_list.append(new_deduction)
+        number_of_deductions = number_of_deductions + 1
+        for index in range(0 , number_of_employees):
+            employee_list[index].payment.deductions.append(0)
+        while True:
+            choice = (input("Do you want to continue Adding Deductions(1)\nDo you want to exit(-1)\n\n"))
+            match choice:
+                case '-1':
+                    return deduction_list, number_of_deductions
+                case '1':  
+                    break
+                case _:
+                    print("Invalid option\n\n")  
+                    continue  
+
+def Add_Deduction(deduction):
+    deduction.name = input("Deduction Name: ")
+    while True:
+        deduction.increase_type = input("""Deduction Decrease Type Will Be:
+        "Percentage(%)"
+        "Multiplicative(*)"
+        "Additive(+)":""")
+        if deduction.increase_type == "%" or "*" or "+":
+            break
+        else:
+            print("Invalid option")
+    deduction.amount = input("Amount of this Decrease: ")
+
+def Remove_Deductions(employee_list, deduction_list, number_of_employees, number_of_deductions):
+    if deduction_list == []:
+        print("No Deductions have been Added yet\n")
+        return deduction_list
+    while True:
+        search = input("Do you want to Remove all Deductions or just a specific Deduction\n\n").strip().lower() 
+        deleted_deduction = 0
+        if search == "all":
+            for index_1 in range(0 , number_of_deductions):
+                deduction_list.pop(index_1)
+                number_of_deductions = number_of_deductions - 1
+                for index_2 in range(0 , number_of_employees):
+                    employee_list[index_2].payment.
