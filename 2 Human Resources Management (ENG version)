@@ -1,0 +1,81 @@
+import Functions
+
+print("Hello, welcome to the HR manager\n")
+employee_list = []
+number_of_employees = 0
+benefit_list = []
+number_of_benefits = 0
+deduction_list = []
+number_of_deductions = 0
+while (1):
+    choice_1 = (input("""
+Select the desired option:
+View options(0)\n\n"""))
+    match choice_1:
+        case '0':
+            print("""
+View Employee Information(1)
+View Payment, Benefits and Deductions(2)
+Exit(-1)\n""")
+        case '1':
+            choice_2 = (input("""
+View Employee List(1)
+Hire Employees(2)
+Fire Employees(3)
+Update Employee Profile(4)
+View Employee Evaluation(5)                              
+Evaluate Employees(6)
+Return(-1)\n\n"""))
+            match choice_2:
+                case '1':
+                    employee_list = Functions.Print_Employee_Information(employee_list, number_of_employees)
+                case '2':
+                    employee_list, number_of_employees = Functions.Add_Employee(employee_list, number_of_employees)
+                case '3':
+                    employee_list, number_of_employees = Functions.Remove_Employee(employee_list, number_of_employees)
+                case '4':
+                    employee_list = Functions.Update_Information(employee_list, number_of_employees)
+                case '5':
+                    employee_list = Functions.Print_Employee_Evaluation(employee_list, number_of_employees)
+                case '6':
+                    employee_list = Functions.Conduct_Employee_Evaluation(employee_list, number_of_employees)
+                case '-1':
+                    continue
+                case _:
+                    print("Invalid option\n\n")
+        case '2':
+            choice_2 = (input("""
+Calculate Total Salary(1)
+Register Employee Benefits(2)
+View Benefits List(3)                             
+Add Benefits(4)
+Remove Benefits(5)
+Register Employee Deductions(6)
+View Benefits List(7)                              
+Add Deductions(8)
+Remove Deductions(9)
+Return(-1)\n\n"""))
+            match choice_2:
+                case '1':
+                    employee_list = Functions.Calculate_Total_Salary_Employees(employee_list, number_of_employees, benefit_list, deduction_list, number_of_benefits, number_of_deductions)
+                case '2':
+                    employee_list = Functions.Register_Employee_Benefits(employee_list, benefit_list, number_of_employees, number_of_benefits)
+                case '3':
+                    benefit_list = Functions.Print_Benefit_List(benefit_list, number_of_benefits)
+                case '4':
+                    benefit_list, number_of_benefits = Functions.Add_Benefits(employee_list, benefit_list, number_of_employees, number_of_benefits)
+                case '5':
+                    benefit_list, number_of_benefits = Functions.Remove_Benefits(employee_list, benefit_list, number_of_employees, number_of_benefits)
+                case '6':
+                    employee_list = Functions.Register_Employee_Deductions(employee_list, deduction_list, number_of_employees, number_of_deductions)
+                case '7':
+                    deduction_list = Functions.Print_Deduction_List(deduction_list, number_of_deductions)
+                case '8':
+                    deduction_list, number_of_deductions = Functions.Add_Deductions(employee_list, deduction_list, number_of_employees, number_of_deductions)
+                case '9':
+                    deduction_list, number_of_deductions = Functions.Remove_Deductions(employee_list, deduction_list, number_of_employees, number_of_deductions)
+        case '-1':
+            print("Thank you for your preference :)")
+            break
+        case '_':
+            print("Invalid option")
